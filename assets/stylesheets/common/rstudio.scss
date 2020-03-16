@@ -1,0 +1,21 @@
+.announcements-composer {
+  display: flex;
+  align-items: center;
+  
+  .control-group {
+    margin-right: 10px;
+  }
+  
+  input, label {
+    margin-bottom: 0;
+  }
+}
+
+span.ad-url {
+  background-color: $primary-low;
+  padding: 2px 4px;
+  
+  a {
+    color: $primary;
+  }
+}

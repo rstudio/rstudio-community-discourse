@@ -1,2 +1,3 @@
 # rstudio-community-discourse
-Discourse plugins supporting community.rstudio.com
+
+Custom Discourse functionality for community.rstudio.com. Built by [Pavilion](thepavilion.io)

@@ -1,0 +1,21 @@
+{{#if showInputs}}
+  <div class="control-group url">
+    <div class="controls">
+      {{text-field
+        class="input-xxlarge"
+        placeholderKey="announcements.ad_url"
+        value=model.ad_url classNames="input-small"}}
+    </div>
+  </div>
+
+  <div class="control-group show-images">
+    <div class="controls">
+      <label>
+        {{input
+          type="checkbox"
+          checked=model.show_images}}
+        {{i18n "announcements.show_images"}}
+      </label>
+    </div>
+  </div>
+{{/if}}
