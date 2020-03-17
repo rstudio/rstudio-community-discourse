@@ -19,3 +19,7 @@ span.ad-url {
     color: $primary;
   }
 }
+
+body:not(.staff) .group-nav {
+  display:none;
+}
