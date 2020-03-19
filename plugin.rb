@@ -18,7 +18,9 @@ after_initialize do
   Topic.register_custom_field_type('show_images', :boolean)
   Topic.register_custom_field_type('ad_url', :string)
   
-  [:show_images, :ad_url].each do |field|
+  ad_fields = [:show_images, :ad_url]
+  
+  ad_fields.each do |field|
     add_to_class(:topic, field.to_sym) { self.custom_fields[field.to_s] }
     add_to_serializer(:topic_view, field.to_sym) { object.topic.send(field.to_s) }
     add_to_serializer(:topic_list_item, field.to_sym) { object.send(field.to_s) }
@@ -48,7 +50,7 @@ after_initialize do
     results
   end
   
-  [:no_definitions, :random].each do |option|
+  ad_fields.each do |option|
     TopicQuery.valid_options << option
     TopicQuery.public_valid_options << option
   end
