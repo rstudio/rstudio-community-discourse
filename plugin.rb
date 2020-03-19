@@ -50,9 +50,8 @@ after_initialize do
     results
   end
   
-  ad_fields.each do |option|
-    TopicQuery.valid_options << option
-    TopicQuery.public_valid_options << option
+  [:no_definitions, :random].each do |option|
+    TopicQuery.add_custom_filter(option) { |results, query| results }
   end
   
   module TopicQueryRandomExtension
