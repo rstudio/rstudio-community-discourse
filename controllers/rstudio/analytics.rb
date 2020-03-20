@@ -19,23 +19,14 @@ class RStudio::AnalyticsController < ::ApplicationController
     
     if topic_ids.any?
       topic_id = topic_ids.first
-      
-      existing = get_analytics(key, topic_id)
-      
-      if existing
-        begin
-          existing = JSON.parse(existing)
-        rescue JSON::ParserError
-          existing = nil
-        end
-      end
-      
+      value = get_analytics(key, topic_id)  
       user_id = current_user.present? ? current_user.id : 'anonymous'
-
-      value = {
-        count: existing.present? ? existing['count'].to_i + 1 : 1,
-        user_ids: existing.present? ? (existing['user_ids'].push(user_id)).uniq : [user_id]
-      }
+      
+      value['count'] ||= 0
+      value['user_ids'] ||= []
+      
+      value['count'] += 1
+      value['user_ids'] |= [user_id]
         
       set_analytics(key, topic_id, value)
     end
@@ -46,7 +37,7 @@ class RStudio::AnalyticsController < ::ApplicationController
   protected
   
   def get_analytics(key, topic_id)
-    PluginStore.get(key, build_key(topic_id))
+    PluginStore.get(key, build_key(topic_id)) || {}
   end
   
   def set_analytics(key, topic_id, value)
