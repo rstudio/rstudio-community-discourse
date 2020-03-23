@@ -50,7 +50,7 @@ after_initialize do
     results
   end
   
-  [:no_definitions, :random].each do |option|
+  [:no_definitions, :random, :visible].each do |option|
     TopicQuery.add_custom_filter(option) { |results, query| results }
   end
   
