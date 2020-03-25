@@ -38,10 +38,6 @@ after_initialize do
     end
   end
   
-  TopicQuery.add_custom_filter(:per_page) do |results, query|
-    results
-  end
-  
   TopicQuery.add_custom_filter(:announcement) do |results, query|
     if ActiveModel::Type::Boolean.new.cast(query.options[:announcement])
       query.guardian.secure_category_ids << SiteSetting.ads_category.to_i
@@ -65,7 +61,7 @@ after_initialize do
   
   module ListControllerAnnouncementExtension
     private def set_category
-      if params[:announcement]
+      if ActiveModel::Type::Boolean.new.cast(params[:announcement])
         guardian.secure_category_ids << SiteSetting.ads_category.to_i
       end
       super
