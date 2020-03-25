@@ -39,7 +39,6 @@ after_initialize do
   end
   
   TopicQuery.add_custom_filter(:per_page) do |results, query|
-    query.options[:per_page] = query.options[:per_page].to_i
     results
   end
   
