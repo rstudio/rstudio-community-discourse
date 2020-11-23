@@ -11,6 +11,7 @@ after_initialize do
     ../lib/rstudio/engine.rb
     ../config/routes.rb
     ../controllers/rstudio/analytics.rb
+    ../controllers/rstudio/announcements.rb
   ].each do |path|
     load File.expand_path(path, __FILE__)
   end
@@ -38,13 +39,6 @@ after_initialize do
     end
   end
   
-  TopicQuery.add_custom_filter(:announcement) do |results, query|
-    if ActiveModel::Type::Boolean.new.cast(query.options[:announcement])
-      query.guardian.secure_category_ids << SiteSetting.ads_category.to_i
-    end
-    results
-  end
-  
   [:no_definitions, :random, :visible].each do |option|
     TopicQuery.add_custom_filter(option) { |results, query| results }
   end
@@ -57,18 +51,5 @@ after_initialize do
   
   class ::TopicQuery
     prepend TopicQueryRandomExtension
-  end
-  
-  module ListControllerAnnouncementExtension
-    private def set_category
-      if ActiveModel::Type::Boolean.new.cast(params[:announcement])
-        guardian.secure_category_ids << SiteSetting.ads_category.to_i
-      end
-      super
-    end
-  end
-  
-  class ::ListController
-    prepend ListControllerAnnouncementExtension
   end
 end
